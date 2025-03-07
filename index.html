@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSDE</title>
+
+</head>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+<body>
+  <div class="container">
+    <h1>JSDE</h1>
+    
+    <div class="info-panel">
+      <p>This IDE supports real browser dialogs:</p>
+      <ul>
+        <li>alert() - Shows a real browser alert popup</li>
+        <li>confirm() - Shows a real confirmation dialog with OK/Cancel</li>
+        <li>prompt() - Shows a real input dialog</li>
+      </ul>
+    </div>
+    
+    <div class="editor-container">
+      <div class="panel">
+        <div class="panel-header">
+          <label for="code-editor" class="panel-label">Code Editor</label>
+          <button id="run-button" class="run-button">Run Code ▶</button>
+        </div>
+        <div class="editor">
+          <textarea id="code-editor" spellcheck="false">// Try using alert() function
+alert("Hello! This is a real browser alert.");
+
+// You can also use console.log
+console.log("This appears in the console output.");
+
+// Example with confirm
+if (confirm("Do you want to continue?")) {
+  console.log("User clicked OK");
+} else {
+  console.log("User clicked Cancel");
+}
+
+// Example with prompt
+const name = prompt("What is your name?", "Guest");
+console.log(`Hello, ${name}!`);</textarea>
+          <div id="error-badge" class="error-badge" style="display: none;">Error on line 0</div>
+        </div>
+      </div>
+      
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-label">Console Output</div>
+        </div>
+        <div class="console">
+          <div id="console-output" class="console-output">
+            <div class="placeholder-text">Run your code to see output here...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="scriptds.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+</body>
+</html>

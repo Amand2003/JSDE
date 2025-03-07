@@ -1,0 +1,517 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #f3f4f6;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+.editor-container {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.panel {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.panel-label {
+  font-weight: 600;
+}
+
+.run-button {
+  padding: 0.5rem 1rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.run-button:hover {
+  background-color: #059669;
+}
+
+.run-button:disabled {
+  background-color: #6ee7b7;
+  cursor: not-allowed;
+}
+
+.editor, .console {
+  flex: 1;
+  position: relative;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+#code-editor {
+  width: 100%;
+  height: 100%;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 1rem;
+  background-color: #1f2937;
+  color: #f9fafb;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #ef4444;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  z-index: 10;
+}
+
+.console-output {
+  width: 100%;
+  height: 100%;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 1rem;
+  background-color: #1f2937;
+  color: #f9fafb;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-text {
+  color: #f87171;
+  white-space: pre-wrap;
+}
+
+.output-text {
+  color: #34d399;
+  white-space: pre-wrap;
+}
+
+.placeholder-text {
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column;
+  }
+  
+  .panel {
+    width: 100%;
+  }
+}
+/* Custom theme for CodeMirror */
+.CodeMirror.cm-s-custom-theme {
+  background-color: #1f2937; /* Dark background */
+  color: #f9fafb; /* Light text */
+}
+
+.cm-s-custom-theme .CodeMirror-gutters {
+  background-color: #1f2937;
+  color: #6b7280;
+  border-right: 1px solid #374151;
+}
+
+.cm-s-custom-theme .CodeMirror-linenumber {
+  color: #6b7280;
+}
+
+.cm-s-custom-theme .CodeMirror-cursor {
+  border-left: 1px solid #f9fafb;
+}
+
+/* Syntax highlighting */
+.cm-s-custom-theme .cm-keyword { color: #f472b6; } /* Pink for keywords */
+.cm-s-custom-theme .cm-variable { color: #f9fafb; } /* White for variables */
+.cm-s-custom-theme .cm-string { color: #34d399; } /* Green for strings */
+.cm-s-custom-theme .cm-number { color: #60a5fa; } /* Blue for numbers */
+.cm-s-custom-theme .cm-comment { color: #6b7280; } /* Gray for comments */
+.console-output {
+  width: 100%;
+  height: 100%;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 1rem;
+  background-color: #1f2937; /* Dark background */
+  color: #f9fafb; /* Light text */
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-text {
+  color: #f87171; /* Red for errors */
+  white-space: pre-wrap;
+}
+
+.output-text {
+  color: #34d399; /* Green for output */
+  white-space: pre-wrap;
+}
+
+.placeholder-text {
+  color: #6b7280; /* Gray for placeholder text */
+}
+.editor-container {
+  display: flex;
+  gap: 1rem;
+  flex: 1; /* Ensure the container takes up available space */
+  height: 100%; /* Make sure the container fills its parent */
+}
+
+.panel {
+  width: 50%; /* Each panel takes half the width */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure the panel fills its container */
+}
+
+.editor, .console {
+  flex: 1; /* Make both editor and console take up equal height */
+  position: relative;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background-color: #1f2937; /* Match the background color */
+  color: #f9fafb; /* Match the text color */
+}
+
+/* Ensure CodeMirror fills the editor container */
+.CodeMirror {
+  height: 100%; /* Make CodeMirror fill the entire editor container */
+}
+
+/* Ensure the console output fills its container */
+.console-output {
+  width: 100%;
+  height: 100%; /* Make the console output fill its container */
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 1rem;
+  background-color: #1f2937; /* Match the background color */
+  color: #f9fafb; /* Match the text color */
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column; /* Stack editor and console vertically on small screens */
+  }
+
+  .panel {
+    width: 100%; /* Full width for each panel on small screens */
+  }
+
+  .editor, .console {
+    height: 50vh; /* Set a fixed height for each section on small screens */
+  }
+}
+/* Add these animations to your existing CSS */
+
+/* Button animations */
+.run-button, .reset-button {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.run-button:hover, .reset-button:hover {
+  transform: scale(1.05);
+}
+
+.reset-button:hover {
+  background-color: #4b5563;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.run-button {
+  animation: pulse 2s infinite;
+}
+
+.run-button:disabled {
+  animation: none;
+}
+
+/* Fade-in animation for panels */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.editor-container {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Header gradient animation */
+@keyframes gradientBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1 {
+  background: linear-gradient(270deg, #10b981, #3b82f6, #f472b6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientBackground 5s ease infinite;
+}
+
+/* Error badge shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.error-badge {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* Floating placeholder text */
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.placeholder-text {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glowing border for code editor */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+}
+
+.editor:focus-within {
+  animation: glow 2s infinite;
+}
+
+/* Animated background for body */
+@keyframes bodyBackground {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  background: linear-gradient(270deg, #1f2937, #111827, #1f2937);
+  background-size: 200% 200%;
+  animation: bodyBackground 10s ease infinite;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #1f2937; /* Dark background */
+  color: #ffffff; /* White text */
+  height: 100vh;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #ffffff; /* White text */
+}
+
+.info-panel {
+  background-color: #1f2937;
+  border: 1px solid #93c5fd;
+  border-radius: 0.375rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.info-panel p {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.info-panel ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+.editor-container {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.panel {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.panel-label {
+  font-weight: 600;
+  color: #ffffff; /* White text */
+}
+
+.run-button {
+  padding: 0.5rem 1rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.run-button:hover {
+  background-color: #059669;
+}
+
+.run-button:disabled {
+  background-color: #6ee7b7;
+  cursor: not-allowed;
+}
+
+.editor, .console {
+  flex: 1;
+  position: relative;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  background-color: #1f2937; /* Dark background */
+  color: #ffffff; /* White text */
+}
+
+.CodeMirror {
+  height: 100%;
+  color: #ffffff; /* White text */
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.console-output {
+  width: 100%;
+  height: 100%;
+  font-family: 'Consolas', 'Courier New', monospace;
+  padding: 1rem;
+  background-color: #1f2937; /* Dark background */
+  color: #ffffff; /* White text */
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.error-text {
+  color: #f87171; /* Red for errors */
+  white-space: pre-wrap;
+}
+
+.output-text {
+  color: #34d399; /* Green for output */
+  white-space: pre-wrap;
+}
+
+.placeholder-text {
+  color: #6b7280; /* Gray for placeholder text */
+}
+
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column;
+  }
+
+  .panel {
+    width: 100%;
+  }
+}
+
+/* Custom theme for CodeMirror */
+.CodeMirror.cm-s-custom-theme {
+  background-color: #1f2937; /* Dark background */
+  color: #ffffff; /* White text */
+}
+
+.cm-s-custom-theme .CodeMirror-gutters {
+  background-color: #1f2937;
+  color: #6b7280;
+  border-right: 1px solid #374151;
+}
+
+.cm-s-custom-theme .CodeMirror-linenumber {
+  color: #6b7280;
+}
+
+.cm-s-custom-theme .CodeMirror-cursor {
+  border-left: 1px solid #ffffff; /* White cursor */
+}
+
+/* Syntax highlighting */
+.cm-s-custom-theme .cm-keyword { color: #f472b6; } /* Pink for keywords */
+.cm-s-custom-theme .cm-variable { color: #ffffff; } /* White for variables */
+.cm-s-custom-theme .cm-string { color: #34d399; } /* Green for strings */
+.cm-s-custom-theme .cm-number { color: #60a5fa; } /* Blue for numbers */
+.cm-s-custom-theme .cm-comment { color: #6b7280; } /* Gray for comments */
